@@ -68,24 +68,41 @@ var _ = { };
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    var results = [];
+    _.each(collection, function(value) {
+      if (test(value)) results.push(value);
+    });
+    return results;
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    return _.filter(collection, function(value) {return !test(value)});
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    for (var i = 0; i < array.length - 1; i++) {
+      for (var j = i + 1; j < array.length; j++) {
+        if (array[i] === array[j]) {
+          array.splice(j, 1);
+          j--;
+        }
+      }
+    }
+    return array;
   };
 
 
   // Return the results of applying an iterator to each element.
   _.map = function(array, iterator) {
-    // map() is a useful primitive iteration function that works a lot
-    // like each(), but in addition to running the operation on all
-    // the members, it also maintains an array of results.
+    var results = [];
+    _.each(array, function(value) {
+      results.push(iterator(value));
+    });
+    return results;
   };
 
   /*
@@ -109,6 +126,7 @@ var _ = { };
   // Calls the method named by methodName on each value in the list.
   // Note: you will nead to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+    
   };
 
   // Reduces an array or object to a single value by repetitively calling
